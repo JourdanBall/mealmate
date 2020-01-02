@@ -6,8 +6,8 @@ const DonorMainPage = (props) => {
         <div id='donor-main-page'>
             Hello {props.userId}
 
-
         </div>
+ 
     )
 }
 // class DonorMainPage extends React.Component {

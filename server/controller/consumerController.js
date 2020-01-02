@@ -20,7 +20,7 @@ consumerController.createReservation = (req, res, next) => {
     // const createdAt = Math.floor(Date.now() / 1000);
     const timeFrame = req.body.timeFrame;
     const userId = req.body.userId;
-    pool.query('INSERT INTO History (username, restaurant, time_frame, created_at) VALUES ($1, $2, $3, NOW())', [userId, restaurant, timeFrame], (error, results) => {
+    pool.query('INSERT INTO History (username, restaurant, time_frame, created_at) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)', [userId, restaurant, timeFrame], (error, results) => {
         if(error) {
             throw error
         } else {
@@ -40,6 +40,9 @@ consumerController.sendReservationEmail = (req, res, next) => {
         auth: {
             user: 'MealMate747@gmail.com',
             pass: 'MealMate1234'
+        },
+        tls:{
+            rejectUnauthorized: false
         }
     });
     const messageBody = `This message serves to confirm that you have set a reservation for ${restaurant} set at ${timeFrame}.`

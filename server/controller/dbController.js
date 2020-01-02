@@ -27,6 +27,9 @@ dbController.sendDonorEmail = (req, res, next) => {
         auth: {
             user: 'MealMate747@gmail.com',
             pass: 'MealMate1234'
+        },
+        tls:{
+            rejectUnauthorized: false
         }
     });
     const messageBody = `Thank you for signing up to MealMate! This message is to confrim that you have signed up your restaurant ${name} as a Donor with the username ${user}.`
@@ -70,6 +73,9 @@ dbController.sendReceiverEmail = (req, res, next) => {
         auth: {
             user: 'MealMate747@gmail.com',
             pass: 'MealMate1234'
+        },
+        tls:{
+            rejectUnauthorized: false
         }
     });
     const messageBody = `Thank you for signing up to MealMate! This message is to confrim that you have signed up as a Receiver with the username ${username}.`

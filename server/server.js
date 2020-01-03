@@ -21,10 +21,12 @@ app.use(express.json());
   const dbRouter = require('./routers/dbRouter');
   const consumerRouter = require('./routers/consumerRouter');
   const producerRouter = require('./routers/producerRouter');
+  const uploadRouter = require('./routers/uploadRouter');
 
   app.use('/db', dbRouter);
   app.use('/consumer', consumerRouter);
   app.use('/producer', producerRouter);
+  app.use('/upload', uploadRouter);
 
 
 app.listen(PORT, ()=> console.log(`listing on ${PORT}`))

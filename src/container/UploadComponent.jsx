@@ -14,7 +14,7 @@ class FileUpload extends Component {
     event.preventDefault();
     const formData = new FormData();
     formData.append('file', this.state.file[0]);
-    axios.post(`/test-upload`, formData, {
+    axios.post(`/upload/test-upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

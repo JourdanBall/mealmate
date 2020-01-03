@@ -1,4 +1,4 @@
-
+const uploadController = {}
 const express = require('express');
 const app = express();
 const AWS = require('aws-sdk');
@@ -6,11 +6,12 @@ const fs = require('fs');
 const fileType = require('file-type');
 const bluebird = require('bluebird');
 const multiparty = require('multiparty');
+const credentials = require('../../credentials.json')
 
 // configure the keys for accessing AWS
 AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  accessKeyId: credentials.AWS_ACCESS_KEY_ID,
+  secretAccessKey: credentials.AWS_SECRET_ACCESS_KEY
 });
 
 // configure AWS to work with promises
@@ -24,7 +25,7 @@ const uploadFile = (buffer, name, type) => {
   const params = {
     ACL: 'public-read',
     Body: buffer,
-    Bucket: process.env.S3_BUCKET,
+    Bucket: credentials.S3_BUCKET,
     ContentType: type.mime,
     Key: `${name}.${type.ext}`
   };
@@ -32,9 +33,9 @@ const uploadFile = (buffer, name, type) => {
 };
 
 // Define POST route
-app.post('/test-upload', (request, response) => {
+uploadController.uploadPicture = (req, res, next) => {
   const form = new multiparty.Form();
-    form.parse(request, async (error, fields, files) => {
+    form.parse(req, async (error, fields, files) => {
       if (error) throw new Error(error);
       try {
         const path = files.file[0].path;
@@ -43,12 +44,14 @@ app.post('/test-upload', (request, response) => {
         const timestamp = Date.now().toString();
         const fileName = `bucketFolder/${timestamp}-lg`;
         const data = await uploadFile(buffer, fileName, type);
-        return response.status(200).send(data);
+        return res.status(200).send(data);
       } catch (error) {
-        return response.status(400).send(error);
+        return res.status(400).send(error);
       }
     });
-});
+};
 
 app.listen(process.env.PORT || 9000);
 console.log('Server up and running...');
+
+module.exports = uploadController

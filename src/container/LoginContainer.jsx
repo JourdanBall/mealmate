@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-
+import FileUpload from './UploadComponent.jsx'
 const LoginContainer = (props) => {
     return(
         <div id="user-login-container">
@@ -15,6 +15,9 @@ const LoginContainer = (props) => {
                 <Link to='/signupasdonor'>
                     <input type='button' id='donor-signup-button' value='Sign Up as Donor'></input>
                 </Link>
+            </section>
+            <section>
+                <FileUpload/>
             </section>
         </div>
     )
